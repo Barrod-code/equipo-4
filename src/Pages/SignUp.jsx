@@ -3,15 +3,14 @@ import { useHistory } from 'react-router-dom';
 import { Flex, Heading, Text, Input, Button } from '@chakra-ui/react';
 
 function SignUp() {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [userData, setUserData] = React.useState({});
 
   const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log('signin:', email, password);
+    console.log('signup:', userData);
     history.push('/');
   };
 
@@ -20,12 +19,11 @@ function SignUp() {
     history.push('/signin');
   };
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
+  const handleStringChange = (e) =>
+    setUserData({
+      ...userData,
+      [e.target.id]: e.target.value,
+    });
 
   return (
     <div>
@@ -52,26 +50,30 @@ function SignUp() {
           {/* <Heading mb="2rem" mt="2rem">SignIn</Heading> */}
           <Input
             mb="1rem"
+            id="name"
             placeholder="First name"
-            onChange={handlePasswordChange}
+            onChange={handleStringChange}
             bg="white"
           />
           <Input
             mb="1rem"
+            id="surname"
             placeholder="Last name"
-            onChange={handlePasswordChange}
+            onChange={handleStringChange}
             bg="white"
           />
           <Input
             mb="1rem"
+            id="email"
             placeholder="Email"
-            onChange={handleEmailChange}
+            onChange={handleStringChange}
             bg="white"
           />
           <Input
             mb="1rem"
+            id="password"
             placeholder="Password"
-            onChange={handlePasswordChange}
+            onChange={handleStringChange}
             bg="white"
           />
           <Button
