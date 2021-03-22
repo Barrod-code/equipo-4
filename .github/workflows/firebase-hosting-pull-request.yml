@@ -3,6 +3,12 @@
 
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
+
+env: # <--- here
+  REACT_APP_API_URL: ${{secrets.REACT_APP_API_URL}} # <--- here
+  REACT_APP_SEARCH_URL: ${{secrets.REACT_APP_SEARCH_URL}} # <--- here
+  REACT_APP_KEY: ${{secrets.REACT_APP_KEY}} # <--- here
+
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
