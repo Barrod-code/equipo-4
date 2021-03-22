@@ -111,6 +111,7 @@ function SearchFieldCollapse({ userQueryData }) {
                   type="submit"
                 />
                 <Button
+                  aria-label="Toggle advanced search"
                   size="sm"
                   onClick={onToggle}
                   bg="#b62a07"
