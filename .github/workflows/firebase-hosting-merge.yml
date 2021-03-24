@@ -22,9 +22,9 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SANGUCHITO_70F8A }}'
           channelId: live
+        env:
+          FIREBASE_CLI_PREVIEWS: hostingchannels
           projectId: sanguchito-70f8a
           REACT_APP_API_URL: ${{secrets.REACT_APP_API_URL}} # <--- here
           REACT_APP_SEARCH_URL: ${{secrets.REACT_APP_SEARCH_URL}} # <--- here
           REACT_APP_KEY: ${{secrets.REACT_APP_KEY}} # <--- heres
-        env:
-          FIREBASE_CLI_PREVIEWS: hostingchannels
