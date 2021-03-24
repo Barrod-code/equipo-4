@@ -8,9 +8,9 @@ name: Deploy to Firebase Hosting on merge
       - master
 
 env: # <--- here
-  REACT_APP_API_URL: '${{secrets.REACT_APP_API_URL}}' # <--- here
-  REACT_APP_SEARCH_URL: '${{secrets.REACT_APP_SEARCH_URL}}' # <--- here
-  REACT_APP_KEY: '${{secrets.REACT_APP_KEY}}' # <--- here
+  REACT_APP_API_URL: '${{ secrets.REACT_APP_API_URL }}' # <--- here
+  REACT_APP_SEARCH_URL: '${{ secrets.REACT_APP_SEARCH_URL }}' # <--- here
+  REACT_APP_KEY: '${{ secrets.REACT_APP_KEY }}' # <--- here
 
 jobs:
   build_and_deploy:
@@ -26,6 +26,6 @@ jobs:
           projectId: sanguchito-70f8a
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
-          REACT_APP_API_URL: '${{secrets.REACT_APP_API_URL}}' # <--- here
-          REACT_APP_SEARCH_URL: '${{secrets.REACT_APP_SEARCH_URL}}' # <--- here
-          REACT_APP_KEY: '${{secrets.REACT_APP_KEY}}' # <--- here
+          REACT_APP_API_URL: '${{ secrets.REACT_APP_API_URL }}' # <--- here
+          REACT_APP_SEARCH_URL: '${{ secrets.REACT_APP_SEARCH_URL }}' # <--- here
+          REACT_APP_KEY: '${{ secrets.REACT_APP_KEY }}' # <--- here
