@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Flex, Heading, Text, Input, Button } from '@chakra-ui/react';
+import { Flex, Heading, Text, Input, Button, Box } from '@chakra-ui/react';
+import auth from '../components/FirebaseConfig';
 
 function SignUp() {
-  const [userData, setUserData] = React.useState({});
+  const [userData, setUserData] = useState({});
 
   const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    try {
+      auth
+        .createUserWithEmailAndPassword(userData.email, userData.password)
+        .then(() => history.push('/'));
+    } catch (e) {
+      console.log(e);
+    }
     console.log('signup:', userData);
-    history.push('/');
   };
 
-  const handleSignIn = (event) => {
-    event.preventDefault();
+  const handleSignIn = () => {
     history.push('/signin');
   };
 
@@ -26,7 +31,7 @@ function SignUp() {
     });
 
   return (
-    <div>
+    <Box>
       <Heading as="h1" textAlign="center" mt="2rem" color="#065666">
         SignUp
       </Heading>
@@ -72,6 +77,7 @@ function SignUp() {
           <Input
             mb="1rem"
             id="password"
+            type="password"
             placeholder="Password"
             onChange={handleStringChange}
             bg="white"
@@ -101,7 +107,7 @@ function SignUp() {
           You do have an account? Sign in
         </Button>
       </Flex>
-    </div>
+    </Box>
   );
 }
 

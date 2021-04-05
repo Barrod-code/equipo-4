@@ -7,6 +7,7 @@ import SignIn from '../Pages/SignIn';
 import SignUp from '../Pages/SignUp';
 import SearchResultsPage from '../Pages/SearchResultsPage';
 import ViewRecipe from './ViewRecipe';
+import Favourites from '../Pages/Favourites';
 
 export default function ModalSwitch() {
   const location = useLocation();
@@ -23,6 +24,9 @@ export default function ModalSwitch() {
         </Route>
         <Route path="/profile">
           <Profile />
+        </Route>
+        <Route path="/favourites">
+          <Favourites />
         </Route>
         <Route path="/signin">
           <SignIn />
