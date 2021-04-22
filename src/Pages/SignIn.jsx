@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Flex, Button, Input, Heading, Text, Box } from '@chakra-ui/react';
+// eslint-disable-next-line no-unused-vars
+import auth from '../components/FirebaseConfig';
 
 function SignIn() {
   const [userData, setUserData] = React.useState({});

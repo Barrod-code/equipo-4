@@ -5,19 +5,19 @@ import auth from '../components/FirebaseConfig';
 
 function SignUp() {
   const [userData, setUserData] = useState({});
+  const [error, setError] = useState();
 
   const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      auth
-        .createUserWithEmailAndPassword(userData.email, userData.password)
-        .then(() => history.push('/'));
-    } catch (e) {
-      console.log(e);
-    }
-    console.log('signup:', userData);
+    auth
+      .createUserWithEmailAndPassword(userData.email, userData.password)
+      .then(() => history.push('/'))
+      .catch((e) => {
+        console.log(e);
+        setError(e);
+      });
   };
 
   const handleSignIn = () => {
@@ -82,6 +82,7 @@ function SignUp() {
             onChange={handleStringChange}
             bg="white"
           />
+          <Text>{error?.message}</Text>
           <Button
             bg="#065666"
             mt="20px"
