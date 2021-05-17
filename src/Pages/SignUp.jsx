@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Flex, Heading, Text, Input, Button, Box } from '@chakra-ui/react';
-import auth from '../components/FirebaseConfig';
+import { useAuthContext } from '../hooks/authContext';
 
 function SignUp() {
   const [userData, setUserData] = useState({});
-  const [error, setError] = useState();
+  const { user, error, ...authActions } = useAuthContext();
 
   const history = useHistory();
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+      history.push('/');
+    }
+  }, [history, user]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    auth
-      .createUserWithEmailAndPassword(userData.email, userData.password)
-      .then(() => history.push('/'))
-      .catch((e) => {
-        console.log(e);
-        setError(e);
-      });
+    try {
+      await authActions.signUp(userData);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleSignIn = () => {

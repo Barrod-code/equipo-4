@@ -8,6 +8,8 @@ import SignUp from '../Pages/SignUp';
 import SearchResultsPage from '../Pages/SearchResultsPage';
 import ViewRecipe from './ViewRecipe';
 import Favourites from '../Pages/Favourites';
+import AccRecovery from '../Pages/AccRecovery';
+import AccRecoveryConfirmation from '../Pages/AccRecoveryConfirmation';
 
 export default function ModalSwitch() {
   const location = useLocation();
@@ -39,6 +41,12 @@ export default function ModalSwitch() {
         </Route>
         <Route path="/recipes">
           <ViewRecipe />
+        </Route>
+        <Route path="/accrecovery">
+          <AccRecovery />
+        </Route>
+        <Route path="/accrecoveryconfirmation">
+          <AccRecoveryConfirmation />
         </Route>
         <Route exact path="/">
           <Home />

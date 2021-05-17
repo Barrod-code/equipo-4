@@ -15,12 +15,10 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
-
-function handleSignOut() {
-  return console.log('signed out');
-}
+import { useAuthContext } from '../hooks/authContext';
 
 export default function LoggedButton() {
+  const { user, error, ...authActions } = useAuthContext();
   return (
     <Menu>
       {({ isOpen }) => (
@@ -41,8 +39,8 @@ export default function LoggedButton() {
           >
             <Flex alignItems="center">
               <HStack>
-                <Avatar />
-                <Text as={Box}>John Doe</Text>
+                <Avatar src={user?.photoURL} />
+                <Text as={Box}>{user?.displayName}</Text>
               </HStack>
             </Flex>
           </MenuButton>
@@ -56,7 +54,7 @@ export default function LoggedButton() {
                 <MenuItem _hover={{ bg: '#6e1a05' }}>My Favourites</MenuItem>
               </Link>
               <MenuDivider />
-              <MenuItem as={Button} onClick={handleSignOut}>
+              <MenuItem as={Button} onClick={authActions.signOut}>
                 SignOut
               </MenuItem>
             </MenuGroup>

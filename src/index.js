@@ -4,6 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { AuthProvider } from './hooks/authContext';
 
 import './styles/index.css';
 import App from './components/App';
@@ -24,8 +25,10 @@ ReactDOM.render(
     <ChakraProvider>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
-          <App />
-          <ReactQueryDevtools initialIsOpen />
+          <AuthProvider>
+            <App />
+            <ReactQueryDevtools initialIsOpen />
+          </AuthProvider>
         </QueryClientProvider>
       </BrowserRouter>
     </ChakraProvider>

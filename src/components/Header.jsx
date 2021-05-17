@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { Button, Flex, Heading } from '@chakra-ui/react';
 import LoggedButton from './LoggedButton';
+import { useAuthContext } from '../hooks/authContext';
 
 function Header() {
-  const isUserSignedIn = false;
+  const auth = useAuthContext();
   return (
     <Flex
       bg="#b62a07"
@@ -22,7 +22,7 @@ function Header() {
       <Link to="/">
         <Heading as="h1">SanGuchito</Heading>
       </Link>
-      {isUserSignedIn ? (
+      {auth.user ? (
         <LoggedButton />
       ) : (
         <Link to="/signin">

@@ -1,33 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Flex, Button, Input, Heading, Text, Box } from '@chakra-ui/react';
 import { useAuthContext } from '../hooks/authContext';
 
-function SignIn() {
+function AccRecovery() {
   const [userData, setUserData] = useState({});
 
   const history = useHistory();
   const { user, error, ...authActions } = useAuthContext();
 
-  // redirect after successful signin
-  useEffect(() => {
-    if (user) {
-      console.log(user);
-      history.push('/');
-    }
-  }, [history, user]);
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      await authActions.signIn(userData.email, userData.password);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const handleSignUp = () => {
-    history.push('/signup');
+    authActions
+      .sendPasswordResetEmail(userData.email)
+      .then(() => history.push('/accrecoveryconfirmation'))
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   const handleStringChange = (e) =>
@@ -39,7 +28,7 @@ function SignIn() {
   return (
     <Box>
       <Heading as="h1" textAlign="center" mt="2rem" color="#065666">
-        SignIn
+        Account Recovery
       </Heading>
       <Flex direction="column" alignItems="center" mt="3rem">
         <Flex
@@ -55,10 +44,11 @@ function SignIn() {
           borderRadius="8px"
           onSubmit={handleSubmit}
         >
-          <Text mb="2rem" color="#065666">
-            Good to see you again :D
+          <Text mb="1rem" color="#065666">
+            Please submit your email and if an account exists associated with
+            it, you will recieve a mail with a recovery code for your account
           </Text>
-          {/* <Heading mb="2rem" mt="2rem">SignIn</Heading> */}
+
           <Input
             mb="1rem"
             placeholder="Email"
@@ -66,45 +56,21 @@ function SignIn() {
             onChange={handleStringChange}
             bg="white"
           />
-          <Input
-            mb="1rem"
-            placeholder="Password"
-            id="password"
-            onChange={handleStringChange}
-            bg="white"
-            type="password"
-          />
+
           <Text>{error?.message}</Text>
           <Button
             bg="#065666"
-            mb="16px"
             color="white"
             _hover={{ bg: '#0987A0' }}
             type="submit"
             boxShadow="1px 1px 1px 1px #2b3f3f"
           >
-            SignIn
+            Email me a recovery code
           </Button>
-          <Text color="#065666">
-            <Link to="/accrecovery">Forgot your password?</Link>
-          </Text>
         </Flex>
-        <Button
-          boxShadow="1px 1px 1px 1px #2b3f3f"
-          bg="#065666"
-          borderRadius="8px"
-          mt="2rem"
-          mb="3rem"
-          color="white"
-          variant="ghost"
-          onClick={handleSignUp}
-          _hover={{ bg: '#0987A0' }}
-        >
-          Don&apos;t you have an account? Sign up!
-        </Button>
       </Flex>
     </Box>
   );
 }
 
-export default SignIn;
+export default AccRecovery;

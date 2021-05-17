@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 
 const firebaseConfig = {
@@ -10,8 +10,8 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APPID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENTID,
 };
+// should it be in a useMemo??
+firebase.initializeApp(firebaseConfig);
+const authService = firebase.auth();
 
-const fire = firebase.initializeApp(firebaseConfig);
-const auth = fire.auth();
-
-export default auth;
+export default authService;
