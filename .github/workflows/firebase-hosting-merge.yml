@@ -19,6 +19,7 @@ env: # <--- here
   REACT_APP_FIREBASE_APPID: '${{ secrets.REACT_APP_FIREBASE_APPID }}'
   REACT_APP_FIREBASE_MEASUREMENTID: '${{ secrets.REACT_APP_FIREBASE_MEASUREMENTID }}'
 
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -43,3 +44,4 @@ jobs:
           REACT_APP_FIREBASE_MESSAGESENDERID: '${{ secrets.REACT_APP_FIREBASE_MESSAGESENDERID }}'
           REACT_APP_FIREBASE_APPID: '${{ secrets.REACT_APP_FIREBASE_APPID }}'
           REACT_APP_FIREBASE_MEASUREMENTID: '${{ secrets.REACT_APP_FIREBASE_MEASUREMENTID }}'
+
