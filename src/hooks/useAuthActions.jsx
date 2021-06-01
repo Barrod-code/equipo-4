@@ -48,8 +48,10 @@ export default function useAuthActions() {
         return true;
       })
       .catch((e) => {
-        setError(e);
-        throw Error(e);
+        if (!(e.code === 'auth/user-not-found')) {
+          setError(e);
+          throw Error(e);
+        }
       });
   };
   const confirmPasswordReset = (code, password) => {
@@ -59,6 +61,7 @@ export default function useAuthActions() {
         return true;
       })
       .catch((e) => {
+        console.log(e);
         setError(e);
         throw Error(e);
       });

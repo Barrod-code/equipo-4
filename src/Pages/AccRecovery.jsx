@@ -14,9 +14,7 @@ function AccRecovery() {
     authActions
       .sendPasswordResetEmail(userData.email)
       .then(() => history.push('/accrecoveryconfirmation'))
-      .catch((e) => {
-        console.error(e);
-      });
+      .catch((e) => console.log(e));
   };
 
   const handleStringChange = (e) =>
@@ -56,7 +54,6 @@ function AccRecovery() {
             onChange={handleStringChange}
             bg="white"
           />
-
           <Text>{error?.message}</Text>
           <Button
             bg="#065666"

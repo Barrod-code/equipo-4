@@ -1,18 +1,31 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Flex, Button, Input, Heading, Text, Box } from '@chakra-ui/react';
+import queryString from 'query-string';
 import { useAuthContext } from '../hooks/authContext';
 
 function AccRecoveryConfirmation() {
-  const [userData, setUserData] = useState({});
-
   const history = useHistory();
+  const [userData, setUserData] = useState(
+    queryString.parse(history.location.search)?.oobCode
+      ? {
+          code: `${queryString.parse(history.location.search).oobCode}`,
+        }
+      : {}
+  );
   const { user, error, ...authActions } = useAuthContext();
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!userData.code) {
+      return;
+    }
+    if (!userData.newPassword) {
+      return;
+    }
+
     authActions
-      .confirmPasswordReset(userData.code, userData.newPassword)
+      .confirmPasswordReset(userData?.code, userData?.newPassword)
       .then(() => history.push('/signin'))
       .catch((e) => {
         console.error(e);
@@ -55,6 +68,7 @@ function AccRecoveryConfirmation() {
             id="code"
             onChange={handleStringChange}
             bg="white"
+            value={userData.code}
           />
           <Input
             mb="1rem"
@@ -64,6 +78,7 @@ function AccRecoveryConfirmation() {
             bg="white"
             type="password"
             autoComplete="new-password"
+            value={userData.newPassword}
           />
           <Text>{error?.message}</Text>
           <Button
