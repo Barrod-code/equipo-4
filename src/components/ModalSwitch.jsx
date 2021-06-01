@@ -10,6 +10,7 @@ import ViewRecipe from './ViewRecipe';
 import Favourites from '../Pages/Favourites';
 import AccRecovery from '../Pages/AccRecovery';
 import AccRecoveryConfirmation from '../Pages/AccRecoveryConfirmation';
+import NotFound from '../Pages/NotFound';
 
 export default function ModalSwitch() {
   const location = useLocation();
@@ -50,6 +51,9 @@ export default function ModalSwitch() {
         </Route>
         <Route exact path="/">
           <Home />
+        </Route>
+        <Route>
+          <NotFound />
         </Route>
       </Switch>
 
