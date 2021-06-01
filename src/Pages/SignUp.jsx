@@ -1,21 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Flex, Heading, Text, Input, Button } from '@chakra-ui/react';
+import { Flex, Heading, Text, Input, Button, Box } from '@chakra-ui/react';
+import { useAuthContext } from '../hooks/authContext';
 
 function SignUp() {
-  const [userData, setUserData] = React.useState({});
+  const [userData, setUserData] = useState({});
+  const { user, error, ...authActions } = useAuthContext();
 
   const history = useHistory();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+      history.push('/');
+    }
+  }, [history, user]);
 
-    console.log('signup:', userData);
-    history.push('/');
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await authActions.signUp(userData);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const handleSignIn = (event) => {
-    event.preventDefault();
+  const handleSignIn = () => {
     history.push('/signin');
   };
 
@@ -26,7 +36,7 @@ function SignUp() {
     });
 
   return (
-    <div>
+    <Box>
       <Heading as="h1" textAlign="center" mt="2rem" color="#065666">
         SignUp
       </Heading>
@@ -72,10 +82,12 @@ function SignUp() {
           <Input
             mb="1rem"
             id="password"
+            type="password"
             placeholder="Password"
             onChange={handleStringChange}
             bg="white"
           />
+          <Text>{error?.message}</Text>
           <Button
             bg="#065666"
             mt="20px"
@@ -101,7 +113,7 @@ function SignUp() {
           You do have an account? Sign in
         </Button>
       </Flex>
-    </div>
+    </Box>
   );
 }
 

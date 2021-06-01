@@ -1,33 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Flex, Button, Input, Heading, Text, Box } from '@chakra-ui/react';
+import queryString from 'query-string';
 import { useAuthContext } from '../hooks/authContext';
 
-function SignIn() {
-  const [userData, setUserData] = useState({});
-
+function AccRecoveryConfirmation() {
   const history = useHistory();
+  const [userData, setUserData] = useState(
+    queryString.parse(history.location.search)?.oobCode
+      ? {
+          code: `${queryString.parse(history.location.search).oobCode}`,
+        }
+      : {}
+  );
   const { user, error, ...authActions } = useAuthContext();
 
-  // redirect after successful signin
-  useEffect(() => {
-    if (user) {
-      console.log(user);
-      history.push('/');
-    }
-  }, [history, user]);
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      await authActions.signIn(userData.email, userData.password);
-    } catch (e) {
-      console.error(e);
+    if (!userData.code) {
+      return;
     }
-  };
+    if (!userData.newPassword) {
+      return;
+    }
 
-  const handleSignUp = () => {
-    history.push('/signup');
+    authActions
+      .confirmPasswordReset(userData?.code, userData?.newPassword)
+      .then(() => history.push('/signin'))
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   const handleStringChange = (e) =>
@@ -39,7 +41,7 @@ function SignIn() {
   return (
     <Box>
       <Heading as="h1" textAlign="center" mt="2rem" color="#065666">
-        SignIn
+        Account Recovery Confirmation
       </Heading>
       <Flex direction="column" alignItems="center" mt="3rem">
         <Flex
@@ -55,56 +57,43 @@ function SignIn() {
           borderRadius="8px"
           onSubmit={handleSubmit}
         >
-          <Text mb="2rem" color="#065666">
-            Good to see you again :D
+          <Text mb="1rem" color="#065666">
+            Check your email. You can either use the link found within or copy
+            your recovery code here, along with a new password
           </Text>
-          {/* <Heading mb="2rem" mt="2rem">SignIn</Heading> */}
+
           <Input
             mb="1rem"
-            placeholder="Email"
-            id="email"
+            placeholder="Recovery code"
+            id="code"
             onChange={handleStringChange}
             bg="white"
+            value={userData.code}
           />
           <Input
             mb="1rem"
-            placeholder="Password"
-            id="password"
+            placeholder="New Password"
+            id="newPassword"
             onChange={handleStringChange}
             bg="white"
             type="password"
+            autoComplete="new-password"
+            value={userData.newPassword}
           />
           <Text>{error?.message}</Text>
           <Button
             bg="#065666"
-            mb="16px"
             color="white"
             _hover={{ bg: '#0987A0' }}
             type="submit"
             boxShadow="1px 1px 1px 1px #2b3f3f"
           >
-            SignIn
+            Change Password
           </Button>
-          <Text color="#065666">
-            <Link to="/accrecovery">Forgot your password?</Link>
-          </Text>
         </Flex>
-        <Button
-          boxShadow="1px 1px 1px 1px #2b3f3f"
-          bg="#065666"
-          borderRadius="8px"
-          mt="2rem"
-          mb="3rem"
-          color="white"
-          variant="ghost"
-          onClick={handleSignUp}
-          _hover={{ bg: '#0987A0' }}
-        >
-          Don&apos;t you have an account? Sign up!
-        </Button>
       </Flex>
     </Box>
   );
 }
 
-export default SignIn;
+export default AccRecoveryConfirmation;
