@@ -26,6 +26,14 @@ function SignIn() {
     }
   };
 
+  const providerSignIn = async (provider) => {
+    try {
+      await authActions.popupSignIn(provider);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const handleSignUp = () => {
     history.push('/signup');
   };
@@ -88,6 +96,19 @@ function SignIn() {
           <Text color="#065666">
             <Link to="/accrecovery">Forgot your password?</Link>
           </Text>
+          <Button
+            boxShadow="1px 1px 1px 1px #2b3f3f"
+            bg="#065666"
+            borderRadius="8px"
+            mt="2rem"
+            mb="3rem"
+            color="white"
+            variant="ghost"
+            onClick={() => providerSignIn('google')}
+            _hover={{ bg: '#0987A0' }}
+          >
+            Google SignIn
+          </Button>
         </Flex>
         <Button
           boxShadow="1px 1px 1px 1px #2b3f3f"

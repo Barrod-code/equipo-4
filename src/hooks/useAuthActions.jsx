@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import authService from '../components/FirebaseConfig';
+import { authService, authProviders } from '../components/FirebaseConfig';
 
 export default function useAuthActions() {
   const [user, setUser] = useState(null);
@@ -16,6 +16,24 @@ export default function useAuthActions() {
         throw Error(e);
       });
   };
+
+  const popupSignIn = (provider) => {
+    switch (provider) {
+      case 'google':
+        return authService
+          .signInWithPopup(authProviders.google)
+          .then((result) => console.log(result))
+          .catch((e) => {
+            setError(e);
+            throw Error(e);
+          });
+
+      default:
+        console.error('broken');
+        throw Error('broken');
+    }
+  };
+
   const signUp = (userData) => {
     return authService
       .createUserWithEmailAndPassword(userData.email, userData.password)
@@ -95,6 +113,7 @@ export default function useAuthActions() {
     user,
     error,
     signIn,
+    popupSignIn,
     signUp,
     signOut,
     sendPasswordResetEmail,

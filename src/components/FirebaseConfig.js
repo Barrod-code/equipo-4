@@ -12,6 +12,5 @@ const firebaseConfig = {
 };
 // should it be in a useMemo??
 firebase.initializeApp(firebaseConfig);
-const authService = firebase.auth();
-
-export default authService;
+export const authService = firebase.auth();
+export const authProviders = { google: new firebase.auth.GoogleAuthProvider() };
