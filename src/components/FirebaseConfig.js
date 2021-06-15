@@ -12,5 +12,7 @@ const firebaseConfig = {
 };
 // should it be in a useMemo??
 firebase.initializeApp(firebaseConfig);
+
 export const authService = firebase.auth();
 export const authProviders = { google: new firebase.auth.GoogleAuthProvider() };
+
