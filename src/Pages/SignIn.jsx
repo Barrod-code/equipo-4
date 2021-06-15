@@ -5,7 +5,6 @@ import { useAuthContext } from '../hooks/authContext';
 
 function SignIn() {
   const [userData, setUserData] = useState({});
-
   const history = useHistory();
   const { user, error, ...authActions } = useAuthContext();
 

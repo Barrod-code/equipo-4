@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import { authService, authProviders } from '../components/FirebaseConfig';
-
 
 export default function useAuthActions() {
   const [user, setUser] = useState(null);
